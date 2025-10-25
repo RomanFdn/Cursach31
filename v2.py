@@ -161,7 +161,6 @@ def buyer_menu(store):
                 print("Кошик порожній.")
                 continue
             name = input("Контактні дані: ")
-            # зменшуємо залишок на складі
             for pid, qty in cart.items:
                 prod = store.find_product(pid)
                 if prod and prod.qty >= qty:
