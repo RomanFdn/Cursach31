@@ -1,80 +1,8 @@
-import json
-from product import Product
-
-class Store:
-    def __init__(self):
-        self.products = []
-        self._load()
-
-    def _load(self):
-        try:
-            with open("products.json", "r", encoding="utf-8") as f:
-                self.products = [Product.from_dict(p) for p in json.load(f)]
-        except:
-            self.products = []
-
-    def _save(self):
-        with open("products.json", "w", encoding="utf-8") as f:
-            json.dump([p.to_dict() for p in self.products], f, ensure_ascii=False, indent=2)
-
-    def add_product(self, name, price, qty):
-        pid = max([p.id for p in self.products], default=0) + 1
-        self.products.append(Product(pid, name, price, qty))
-        self._save()
-
-    def edit_product(self, pid, name, price, qty):
-        for p in self.products:
-            if p.id == pid:
-                p.name = name
-                p.price = price
-                p.qty = qty
-        self._save()
-
-    def remove_product(self, pid):
-        self.products = [p for p in self.products if p.id != pid]
-        self._save()
-
-    def find_product(self, pid):
-        for p in self.products:
-            if p.id == pid:
-                return p
-        return None
-
-class Cart:
-    def __init__(self):
-        self.items = []  # (pid, qty)
-
-    def add_item(self, pid, qty):
-        for i, (p, q) in enumerate(self.items):
-            if p == pid:
-                self.items[i] = (p, q + qty)
-                return
-        self.items.append((pid, qty))
-
-    def edit_item(self, pid, new_qty):
-        for i, (p, q) in enumerate(self.items):
-            if p == pid:
-                if new_qty > 0:
-                    self.items[i] = (p, new_qty)
-                else:
-                    self.items.pop(i)
-                return
-
-    def remove_item(self, pid):
-        self.items = [item for item in self.items if item[0] != pid]
-
-    def view(self, store):
-        print("\nВаш кошик:")
-        for pid, qty in self.items:
-            prod = store.find_product(pid)
-            if prod:
-                print(f"ID={prod.id} | {prod.name} | {prod.price} грн | {qty} шт.")
-
-    def is_empty(self):
-        return len(self.items) == 0
+from store import Store
+from cart import Cart
 
 def admin_menu(store):
-    while True:
+     while True:
         print('\n--- Адмін-панель ---')
         print('1. Додати товар')
         print('2. Редагувати товар')
