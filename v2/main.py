@@ -33,8 +33,10 @@ def admin_menu(store):
         elif cmd == "0":
             break
 
+#Реалізувати класами
 def buyer_menu(store):
     cart = Cart()
+    #Створити віддільний файл з юзер інтерфейсом
     while True:
         print('\n--- Меню покупця ---')
         print('1. Каталог товарів')
@@ -61,7 +63,11 @@ def buyer_menu(store):
             cart.add_item(pid, qty)
             print("Товар у кошику")
         elif cmd == "3":
-            cart.view(store)
+            print("\nВаш кошик:")
+            for pid, qty in cart.items:
+                prod = store.find_product(pid)
+                if prod:
+                    print(f"ID={prod.id} | {prod.name} | {prod.price} грн | {qty} шт.")
         elif cmd == "4":
             pid = int(input("ID у кошику: "))
             qty = int(input("Нова кількість: "))

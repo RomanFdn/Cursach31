@@ -21,12 +21,5 @@ class Cart:
     def remove_item(self, pid):
         self.items = [item for item in self.items if item[0] != pid]
 
-    def view(self, store):
-        print("\nВаш кошик:")
-        for pid, qty in self.items:
-            prod = store.find_product(pid)
-            if prod:
-                print(f"ID={prod.id} | {prod.name} | {prod.price} грн | {qty} шт.")
-
     def is_empty(self):
         return len(self.items) == 0
