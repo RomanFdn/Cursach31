@@ -115,4 +115,4 @@ class BuyerInterface:
                 prod.qty -= qty
         self.store._save()
         print("Замовлення оформлено на ім'я:", name)
-        self.cart.items = []  # Очистити кошик замість створення нового об'єкта
+        self.cart.items = []

@@ -36,7 +36,7 @@ def buyer_logic(store):
             buyer_ui.remove_from_cart()
         elif cmd == "6":
             buyer_ui.checkout()
-            buyer_ui.cart = Cart()  # Перестворити кошик після замовлення
+            buyer_ui.cart = Cart()
         elif cmd == "0":
             break
 
