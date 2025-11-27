@@ -1,44 +1,63 @@
 from cart import Cart
 
+class ConsoleUI:
+    """Консольний UI — меню та відображення в методах."""
+    def display_products(self, products):
+        """Показати список товарів"""
+        for p in products:
+            print(f"ID={p.id} | {p.name} | {p.price} грн | {p.qty} шт.")
+
+    def display_cart(self, cart, store):
+        """Показати кошик"""
+        print("\nВаш кошик:")
+        for pid, qty in cart.items:
+            prod = store.find_product(pid)
+            if prod:
+                print(f"ID={prod.id} | {prod.name} | {prod.price} грн | {qty} шт.")
+
+    def admin_menu(self):
+        """Меню адміністратора"""
+        print('\n--- Адмін-панель ---')
+        print('1. Додати товар')
+        print('2. Редагувати товар')
+        print('3. Видалити товар')
+        print('4. Переглянути каталог')
+        print('0. Вийти з адмін-панелі')
+
+    def buyer_menu(self):
+        """Меню покупця"""
+        print('\n--- Меню покупця ---')
+        print('1. Каталог товарів')
+        print('2. Додати товар у кошик')
+        print('3. Переглянути кошик')
+        print('4. Змінити кількість у кошику')
+        print('5. Видалити товар з кошика')
+        print('6. Оформити замовлення')
+        print('0. Вийти в головне меню')
+
+    def main_menu(self):
+        """Головне меню"""
+        print('\n--- Головне меню ---')
+        print('1. Адміністратор')
+        print('2. Покупець')
+        print('0. Вихід')
+
+console_ui = ConsoleUI()
+
 def display_products(products):
-    """Показати список товарів"""
-    for p in products:
-        print(f"ID={p.id} | {p.name} | {p.price} грн | {p.qty} шт.")
+    return console_ui.display_products(products)
 
 def display_cart(cart, store):
-    """Показати кошик"""
-    print("\nВаш кошик:")
-    for pid, qty in cart.items:
-        prod = store.find_product(pid)
-        if prod:
-            print(f"ID={prod.id} | {prod.name} | {prod.price} грн | {qty} шт.")
+    return console_ui.display_cart(cart, store)
 
 def admin_menu():
-    """Меню адміністратора"""
-    print('\n--- Адмін-панель ---')
-    print('1. Додати товар')
-    print('2. Редагувати товар')
-    print('3. Видалити товар')
-    print('4. Переглянути каталог')
-    print('0. Вийти з адмін-панелі')
+    return console_ui.admin_menu()
 
 def buyer_menu():
-    """Меню покупця"""
-    print('\n--- Меню покупця ---')
-    print('1. Каталог товарів')
-    print('2. Додати товар у кошик')
-    print('3. Переглянути кошик')
-    print('4. Змінити кількість у кошику')
-    print('5. Видалити товар з кошика')
-    print('6. Оформити замовлення')
-    print('0. Вийти в головне меню')
+    return console_ui.buyer_menu()
 
 def main_menu():
-    """Головне меню"""
-    print('\n--- Головне меню ---')
-    print('1. Адміністратор')
-    print('2. Покупець')
-    print('0. Вихід')
+    return console_ui.main_menu()
 
 class AdminInterface:
     """Інтерфейс для адміністратора"""
@@ -66,7 +85,7 @@ class AdminInterface:
         print("Товар видалено.")
     
     def view_catalog(self):
-        display_products(self.store.products)
+        console_ui.display_products(self.store.products)
 
 class BuyerInterface:
     """Інтерфейс для покупця"""
@@ -75,7 +94,7 @@ class BuyerInterface:
         self.cart = cart
     
     def view_catalog(self):
-        display_products(self.store.products)
+        console_ui.display_products(self.store.products)
     
     def add_to_cart(self):
         pid = int(input("ID товару: "))
@@ -91,7 +110,7 @@ class BuyerInterface:
         print("Товар у кошику")
     
     def view_cart(self):
-        display_cart(self.cart, self.store)
+        console_ui.display_cart(self.cart, self.store)
     
     def edit_cart_item(self):
         pid = int(input("ID у кошику: "))

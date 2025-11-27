@@ -1,11 +1,11 @@
 from store import Store
 from cart import Cart
-from ui import AdminInterface, BuyerInterface, admin_menu, buyer_menu, main_menu
+from ui import AdminInterface, BuyerInterface, console_ui
 
 def admin_logic(store):
     admin_ui = AdminInterface(store)
     while True:
-        admin_menu()
+        console_ui.admin_menu()
         cmd = input('=> ')
         if cmd == "1":
             admin_ui.add_product()
@@ -22,7 +22,7 @@ def buyer_logic(store):
     cart = Cart()
     buyer_ui = BuyerInterface(store, cart)
     while True:
-        buyer_menu()
+        console_ui.buyer_menu()
         cmd = input('=> ')
         if cmd == "1":
             buyer_ui.view_catalog()
@@ -42,7 +42,7 @@ def buyer_logic(store):
 
 store = Store()
 while True:
-    main_menu()
+    console_ui.main_menu()
     role = input('=> ')
     if role == "1":
         admin_logic(store)
